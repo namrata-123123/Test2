@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FER Login</title>
+<script >
+function validateForm(nextPath){
+	var form=document.LoginForm;
+	var errorMessages='';
+	if (form.username.value ==''){
+		errorMessages='please enter username.';
+		}
+	if (form.password.value ==''){
+		errorMessages+='<BR>please enter password.';
+		}
+	
+	
+	if(errorMessages!=''){
+		//alert(errorMessages);
+		
+		var errorTrIdObj=document.getElementById('errorTrId')
+		var errorTdIdObj=document.getElementById('errorTdId')
+		errorTdIdObj.innerHTML=errorMessages;
+		errorTrIdObj.style.color='red';   
+		errorTrIdObj.style.display='';
+	}else{
+		form.action=nextPath;
+		form.submit();
+	}
+	
+	
+}
+
+</script>
+</head>
+<body>
+	<form action="LoginPost.jsp" method='post' value='LoginForm'>
+		<table border="1" align="center">
+			<tr>
+				<td colspan="2" align="center">Login</td>
+				<br>
+			</tr>
+			
+			<tr style='display:none;' id='errorTrId'>
+			<td colspan="2"id='errorTdId'>
+			</td>
+			</tr>
+			
+			<tr>
+				<td>Username<font color='red'>*</font></td>
+				<td><input type="text" name="username"></td>
+				<br>
+			</tr>
+			<tr>
+				<td>password<font color='red'>*</font></td>
+				<td><input type="password" name="password"></td>
+				<br>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+				<input type="submit" value="Login"onclick="javascript:validateForm('LoginPost.jsp')">&nbsp&nbsp<a href="Registration.html">Registration</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

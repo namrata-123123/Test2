@@ -1,0 +1,121 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script>
+	function validateForm(nextPath){
+	var form=document.RegistrationForm;
+	var errorMessages='';
+	if(form.firstName.value==''){
+		errorMessages = "please enter first name<br>";
+	}
+	if(form.lastName.value==''){
+		errorMessages += "please enter last name<br>";
+	}
+	if(form.username.value==''){
+		errorMessages += "please enter username<br>";
+	}
+	if(form.password.value==''){
+		errorMessages += "please enter password<br>";
+	}
+	if(form.email.value==''){
+		errorMessages += "please enter email<br>";
+	}
+	if(errorMessages!=''){
+		//alert(errorMessages);
+		var errorTrIdObj=document.getElementById('errorTrId')
+		var errorTdIdObj=document.getElementById('errorTdId')
+		errorTdIdObj.innerHTML=errorMessages;
+		errorTrIdObj.style.color='red';   
+		errorTrIdObj.style.display='';
+	}else{
+		form.action=nextPath;
+		form.submit();
+	}
+}
+function validateUsername(username) {
+	  var xhttp = new XMLHttpRequest();
+	  var url='FERAJAX.jsp?username='+username;
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	     //alert( "."+this.responseText+".");
+	     //alert("."+this.responseText.trim()+".");
+	     
+	     var msg="";
+      var msgTrIdObj= document.getElementById('msgTrId');
+	  var msgTdIdObj=document.getElementById('msgTdId');
+	    
+	     if(this.responseText.trim() =='Y') {
+	    	 msg='Username is available';
+	    	 msgTdIdObj.style.color= 'green';
+	     }else{
+	    	msg='Username is not available';
+	    	msgTdIdObj.style.color= 'red';
+	     }
+	     msgTdIdObj.innerHTML= msg;
+	     msgTrIdObj.style.display='';
+	    }
+	  };
+
+	}
+
+</script>
+</head>
+<body>
+
+	<form action="RegistrationPost.jsp" method='post'
+		name='RegistrationForm'>
+		<table border="1" align="center">
+			<tr>
+				<td colspan="2" align="center">Registration</td>
+			</tr>
+			<tr style='display: none;' id='errorTrId'>
+				<td colspan="2" id='errorTdId'></td>
+			</tr>
+
+			<tr>
+
+				<td>First name<font color='red'>*</font></td>
+				<td><input type="text" name="firstName"></td>
+			</tr>
+			<tr>
+				<td>Middle name</td>
+				<td><input type="text" name="middleName"></td>
+			</tr>
+			<tr>
+				<td>Last name<font color='red'>*</font></td>
+				<td><input type="text" name="lastName"></td>
+			</tr>
+			<tr>
+				<td>User name<font color='red'>*</font></td>
+				<td><input type="text" name="username"
+					onChange="javascript:validateUsername(this.value);" /></td>
+			</tr>
+			<tr id="msgTrId" style="display: none">
+
+				<td id="msgTdId" colspan="2"></td>
+			</tr>
+			<tr>
+				<td>Password<font color='red'>*</font></td>
+				<td><input type="password" name="password"></td>
+			</tr>
+			<tr>
+				<td>Mobile number</td>
+				<td><input type="text" name="mobileNumber"></td>
+			</tr>
+			<tr>
+				<td>Email<font color='red'>*</font></td>
+				<td><input type="email" name="email"></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><input type="button"
+					value="Register"
+					onclick="javascript:validateForm('RegistrationPost.jsp')">
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
